@@ -1,4 +1,5 @@
 ﻿
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace DemoApi.Data
 		{
 		}
 
-		public DbSet<> MyProperty { get; set; }
+		public DbSet<Post> Posts{ get; set; }
 	}
 }

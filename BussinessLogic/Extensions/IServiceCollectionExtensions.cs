@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLogic.Installers
+namespace BussinessLogic.Extensions
 {
-	public static class ServiceInstaller
+	public static class IServiceCollectionExtensions
 	{
 		public static IServiceCollection InstallServices(this IServiceCollection services) {
 

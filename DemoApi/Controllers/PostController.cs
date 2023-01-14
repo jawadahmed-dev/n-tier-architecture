@@ -13,7 +13,12 @@ namespace DemoApi.Controllers
 	[ApiController]
 	public class PostController : ControllerBase
 	{
-		private IPostService _postService; 
+		private IPostService _postService;
+
+		public PostController(IPostService postService)
+		{
+			_postService = postService;
+		}
 
 		[HttpGet]
 		public IActionResult Get() {
