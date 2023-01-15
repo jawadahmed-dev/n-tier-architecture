@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Services.Posts;
+﻿using BussinessLogic.Services.Accounts;
+using BussinessLogic.Services.Posts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace BussinessLogic.Extensions
 
 			// Post Service
 			services.AddScoped<IPostService, PostService>();
+
+			// Account Service
+			services.AddScoped<IAccountService, AccountService>();
 
 			return services;
 		}

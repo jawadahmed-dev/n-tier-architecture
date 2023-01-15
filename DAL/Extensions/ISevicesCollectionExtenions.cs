@@ -1,5 +1,7 @@
-﻿using DAL.Repositories.Posts;
+﻿using DAL.Repositories.Accounts;
+using DAL.Repositories.Posts;
 using DemoApi.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,11 @@ namespace DAL.Extensions
 				options.UseSqlServer(
 					configuration.GetConnectionString("DefaultConnection")));
 
+			services.AddIdentity<IdentityUser, IdentityRole>(options => {
+				options.User.RequireUniqueEmail = true;
+			})
+				.AddEntityFrameworkStores<DataContext>();
+
 			return services;
 		}
 
@@ -28,6 +35,9 @@ namespace DAL.Extensions
 
 			// Post Repository
 			services.AddScoped<IPostRepository, PostRepository>();
+
+			// Account Repository
+			services.AddScoped<IAccountRepository, AccountRepository>();
 
 			return services;
 		}
