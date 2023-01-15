@@ -18,40 +18,25 @@ namespace DemoApi.Controllers
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> RegisterUserAsyc([FromBody] RegisterRequest request) {
+		public async Task<IActionResult> RegisterUserAsyc([FromBody] RegisterRequest request)
+		{
 
-			try
-			{
-				var response = await _accountService.RegisterUserAsync(request);
+			var response = await _accountService.RegisterUserAsync(request);
 
-				if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = false, errors = response.Errors });
+			if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = false, errors = response.Errors });
 
-				return new OkObjectResult(new {isSucess = true, message = "user has been successfully registered!"});
-			}
-			catch (Exception e)
-			{
+			return new OkObjectResult(new { isSucess = true, message = "user has been successfully registered!" });
 
-				return StatusCode(500, new { isSuccess = false, errorMessage = e.Message });
-			}
 		}
 
 		[HttpPost("login")]
 		public async Task<IActionResult> LoginUserAsyc([FromQuery] LoginRequest request)
 		{
+			var response = await _accountService.LoginUserAsync(request);
 
-			try
-			{
-				var response = await _accountService.LoginUserAsync(request);
+			if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = response.IsSuccess, errors = response.Errors });
 
-				if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = response.IsSuccess, errors = response.Errors });
-
-				return new OkObjectResult(new { isSucess = true, token = response.Token});
-			}
-			catch (Exception e)
-			{
-
-				return StatusCode(500, new { isSuccess = false, errorMessage = e.Message });
-			}
+			return new OkObjectResult(new { isSucess = true, token = response.Token });
 		}
 
 	}

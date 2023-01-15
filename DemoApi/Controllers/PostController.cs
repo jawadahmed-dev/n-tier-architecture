@@ -20,23 +20,17 @@ namespace DemoApi.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get() {
+		public IActionResult Get()
+		{
 			return Ok(new { name = "john doe" });
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateAsync([FromBody] CreatePostRequest request)
 		{
-			try {
-				var response = await _postService.CreateAsync(request);
+			var response = await _postService.CreateAsync(request);
 
-				return new OkObjectResult(new { isSuccess = true, data = response });
-
-			}
-			catch (Exception e) {
-
-				return StatusCode(500, new { isSuccess = false, errorMessage = e.Message });
-			}
+			return new OkObjectResult(new { isSuccess = true, data = response });
 		}
 	}
 }

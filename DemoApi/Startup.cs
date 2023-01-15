@@ -2,6 +2,7 @@ using BussinessLogic.Extensions;
 using DAL.Extensions;
 using DemoApi.Domain.Options;
 using DemoApi.Extensions;
+using DemoApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +64,10 @@ namespace DemoApi
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseMiddleware<PerformanceMiddleware>();
+
+			app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 			app.UseEndpoints(endpoints =>
 			{
