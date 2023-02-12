@@ -9,7 +9,7 @@ namespace BussinessLogic.Services.Accounts
 {
 	public interface IAccountService
 	{
-		public Task<RegisterResponse> RegisterUserAsync(RegisterRequest request);
-		public Task<LoginResponse> LoginUserAsync(LoginRequest request);
+		public Task<RegisterResponse> RegisterAsync(RegisterRequest request);
+		public Task<LoginResponse> LoginAsync(LoginRequest request);
 	}
 }

@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using BussinessLogic.Requests.Posts;
-using DAL.Dtos.Posts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace BussinessLogic.MappingProfiles
 {
@@ -13,8 +8,7 @@ namespace BussinessLogic.MappingProfiles
 	{
 		public PostProfile()
 		{
-			CreateMap<CreatePostRequest, CreatePostDbRequest>();
-			CreateMap<CreatePostDbResponse, CreatePostResponse>();
+			CreateMap<CreatePostRequest, Post>();
 		}
 	}
 }

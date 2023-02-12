@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace BussinessLogic.Requests.Posts
 {
-	public class CreatePostRequest
+	public class PostRequest
 	{
-		public String Name { get; set; }
+		public Guid Id { get; set; }
 	}
 
-	public class CreatePostResponse : BaseResponse { }
+	public class PostResponse : BaseResponse 
+	{
+		public string Name { get; set; }
+	}
 }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using BussinessLogic.Exceptions;
+using BussinessLogic.Helper;
 using BussinessLogic.Requests.Account;
-using DAL.Dtos.Account;
-using DAL.Repositories.Accounts;
+using DataAccess.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,25 +15,51 @@ namespace BussinessLogic.Services.Accounts
 {
 	class AccountService : IAccountService
 	{
-		private readonly IAccountRepository _accountRepository;
 		private readonly IMapper _mapper;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly IConfiguration _configuration;
 
-		public AccountService(IAccountRepository accountRepository, IMapper mapper)
+		public AccountService
+			(IMapper mapper, 
+			UserManager<ApplicationUser> userManager, 
+			SignInManager<ApplicationUser> signInManager,
+			IConfiguration configuration)
 		{
-			_accountRepository = accountRepository;
 			_mapper = mapper;
+			_userManager = userManager;
+			_signInManager = signInManager;
+			_configuration = configuration;
 		}
 
-		public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
+		public async Task<LoginResponse> LoginAsync(LoginRequest request)
 		{
-			var response = await _accountRepository.LoginUserAsync(_mapper.Map<LoginDbRequest>(request));
-			return _mapper.Map<LoginResponse>(response);
+			var user = await _userManager.FindByEmailAsync(request.Email);
+
+			if (user == null) throw new BadRequestException("Email is incorrect");
+
+			var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
+
+			if(!result.Succeeded) throw new BadRequestException("Password is incorrect");
+
+			var response = new LoginResponse {
+				UserName = user.UserName,
+				Email = user.Email,
+				Token = JwtHelper.GenerateToken(user, _configuration)
+			};
+
+			return response;
 		}
 
-		public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest request)
+		public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
 		{
-			var response = await _accountRepository.RegisterUserAsync(_mapper.Map<RegisterDbRequest>(request));
-			return _mapper.Map<RegisterResponse>(response);
+			var user = _mapper.Map<ApplicationUser>(request);
+
+			var result = await _userManager.CreateAsync(user, request.Password);
+
+			if (!result.Succeeded) throw new BadRequestException(result.Errors.FirstOrDefault()?.Description);
+
+			return new RegisterResponse { Id = Guid.Parse((await _userManager.FindByEmailAsync(user.Email)).Id) };
 		}
 	}
 }

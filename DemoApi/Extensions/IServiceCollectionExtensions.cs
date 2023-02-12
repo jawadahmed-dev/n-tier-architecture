@@ -1,15 +1,10 @@
-﻿using AutoMapper;
-using Domain.Options;
+﻿using Domain.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DemoApi.Extensions
 {
@@ -17,8 +12,15 @@ namespace DemoApi.Extensions
 	{
 		public static IServiceCollection InstallMvc(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddControllersWithViews();
+			InstallController(services);
+			InstallJwt(services, configuration);
+			InstallSwagger(services, configuration);
 
+			return services;
+		}
+
+		private static void InstallJwt(IServiceCollection services, IConfiguration configuration)
+		{
 			var jwtOptions = new JwtOptions();
 			configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
 
@@ -39,7 +41,10 @@ namespace DemoApi.Extensions
 						ValidateLifetime = true
 					};
 				});
+		}
 
+		private static void InstallSwagger(IServiceCollection services, IConfiguration configuration)
+		{
 			services.AddSwaggerGen(options => {
 				options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "TweetBook Api", Version = "v1" });
 				options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -63,29 +68,12 @@ namespace DemoApi.Extensions
 					  new string[] { }
 					}
 				  });
-				});
-
-			return services;
-		}
-
-		public static IServiceCollection InstallAutoMapper(this IServiceCollection services)
-		{
-			var mapperConfig = new MapperConfiguration(mc =>
-			{
-				// Post Profiles
-				mc.AddProfile<DAL.MappingProfiles.PostProfile>();
-				mc.AddProfile<BussinessLogic.MappingProfiles.PostProfile>();
-
-				// Account Profile
-				mc.AddProfile<DAL.MappingProfiles.AccountProfile>();
-				mc.AddProfile<BussinessLogic.MappingProfiles.AccountProfile>();
 			});
-
-			IMapper mapper = mapperConfig.CreateMapper();
-			services.AddSingleton(mapper);
-			return services;
 		}
 
-
+		private static void InstallController(IServiceCollection services)
+		{
+			services.AddControllersWithViews();
+		}
 	}
 }

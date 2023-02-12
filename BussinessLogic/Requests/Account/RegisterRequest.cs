@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BussinessLogic.Requests.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,8 @@ namespace BussinessLogic.Requests.Account
 		public string Password { get; set; }
 	}
 
-	public class RegisterResponse
+	public class RegisterResponse 
 	{
-		public bool IsSuccess { get; set; }
-		public List<String> Errors { get; set; }
+		public Guid Id { get; set; }
 	}
 }

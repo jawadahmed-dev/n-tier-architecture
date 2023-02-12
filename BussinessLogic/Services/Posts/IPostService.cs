@@ -10,5 +10,6 @@ namespace BussinessLogic.Services.Posts
 	public interface IPostService
 	{
 		public Task<CreatePostResponse> CreateAsync(CreatePostRequest request);
+		public Task<PostResponse> GetAsync(PostRequest request);
 	}
 }

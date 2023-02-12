@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Requests.Posts;
+﻿using BussinessLogic.Requests;
+using BussinessLogic.Requests.Posts;
 using BussinessLogic.Services.Posts;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,17 +21,15 @@ namespace DemoApi.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<IActionResult> Get([FromQuery] PostRequest request)
 		{
-			return Ok(new { name = "john doe" });
+			return Ok(ApiResult<PostResponse>.Success(await _postService.GetAsync(request)));
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateAsync([FromBody] CreatePostRequest request)
 		{
-			var response = await _postService.CreateAsync(request);
-
-			return new OkObjectResult(new { isSuccess = true, data = response });
+			return Ok(ApiResult<CreatePostResponse>.Success(await _postService.CreateAsync(request)));
 		}
 	}
 }

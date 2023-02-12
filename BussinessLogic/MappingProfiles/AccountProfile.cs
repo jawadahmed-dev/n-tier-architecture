@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BussinessLogic.Requests.Account;
-using DAL.Dtos.Account;
+using DataAccess.Identity;
 
 namespace BussinessLogic.MappingProfiles
 {
@@ -8,12 +8,7 @@ namespace BussinessLogic.MappingProfiles
 	{
 		public AccountProfile()
 		{
-			CreateMap<RegisterRequest, RegisterDbRequest>();
-			CreateMap<RegisterDbResponse, RegisterResponse>();
-
-			// Login Profile
-			CreateMap<LoginRequest, LoginDbRequest>();
-			CreateMap<LoginDbResponse, LoginResponse>();
+			CreateMap<RegisterRequest, ApplicationUser>();
 		}
 	}
 }

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BussinessLogic.Exceptions;
+using BussinessLogic.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DemoApi.Middlewares {
@@ -33,8 +36,18 @@ namespace DemoApi.Middlewares {
             _logger.LogError(e.Message);
 
             var code = StatusCodes.Status500InternalServerError;
+            var errors = new List<String> { e.Message };
 
-            var result = JsonConvert.SerializeObject(new { isSuccess = false, error = e.Message });
+            code = e switch
+            {
+                NotFoundException => StatusCodes.Status404NotFound,
+                ResourceNotFoundException => StatusCodes.Status404NotFound,
+                BadRequestException => StatusCodes.Status400BadRequest,
+                UnprocessableRequestException => StatusCodes.Status422UnprocessableEntity,
+                _ => code
+            };
+
+            var result = JsonConvert.SerializeObject(ApiResult<string>.Failure(errors));
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = code;

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DAL.Migrations
+namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230114175339_added_identity")]
-    partial class added_identity
+    [Migration("20230211142546_Identity_Added")]
+    partial class Identity_Added
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.Post", b =>
+            modelBuilder.Entity("DAL.Entities.Posts", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

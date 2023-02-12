@@ -1,5 +1,7 @@
-﻿using BussinessLogic.Services.Accounts;
+﻿using BussinessLogic.MappingProfiles;
+using BussinessLogic.Services.Accounts;
 using BussinessLogic.Services.Posts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,15 +13,27 @@ namespace BussinessLogic.Extensions
 {
 	public static class IServiceCollectionExtensions
 	{
-		public static IServiceCollection InstallServices(this IServiceCollection services) {
+		public static IServiceCollection InstallBussinessLogic(this IServiceCollection services, IConfiguration configuration) {
 
-			// Post Service
+			InstallServices(services);
+			InstallAutoMapper(services);
+
+			return services;
+		}
+
+		public static void InstallServices(IServiceCollection services)
+		{
+
+			// Posts Service
 			services.AddScoped<IPostService, PostService>();
 
 			// Account Service
 			services.AddScoped<IAccountService, AccountService>();
+		}
 
-			return services;
+		public static void InstallAutoMapper(IServiceCollection services)
+		{
+			services.AddAutoMapper(typeof(IMappingProfilesMarker));
 		}
 	}
 }

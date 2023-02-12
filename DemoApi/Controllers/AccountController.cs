@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Requests.Account;
+﻿using BussinessLogic.Requests;
+using BussinessLogic.Requests.Account;
 using BussinessLogic.Services.Accounts;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,23 +21,13 @@ namespace DemoApi.Controllers
 		[HttpPost("register")]
 		public async Task<IActionResult> RegisterUserAsyc([FromBody] RegisterRequest request)
 		{
-
-			var response = await _accountService.RegisterUserAsync(request);
-
-			if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = false, errors = response.Errors });
-
-			return new OkObjectResult(new { isSucess = true, message = "user has been successfully registered!" });
-
+			return Ok(ApiResult<RegisterResponse>.Success(await _accountService.RegisterAsync(request)));
 		}
 
 		[HttpPost("login")]
 		public async Task<IActionResult> LoginUserAsyc([FromQuery] LoginRequest request)
 		{
-			var response = await _accountService.LoginUserAsync(request);
-
-			if (!response.IsSuccess) return new BadRequestObjectResult(new { isSuccess = response.IsSuccess, errors = response.Errors });
-
-			return new OkObjectResult(new { isSucess = true, token = response.Token });
+			return Ok(ApiResult<LoginResponse>.Success(await _accountService.LoginAsync(request)));
 		}
 
 	}
