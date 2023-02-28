@@ -4,13 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLogic.Requests.Account
+namespace BussinessLogic.RequestHandlers.Accounts.Queries.Login
 {
-	public class LoginRequest
-	{
-		public string Email { get; set; }
-		public string Password { get; set; }
-	}
 	public class LoginResponse
 	{
 		public string UserName { get; set; }

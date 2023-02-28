@@ -1,5 +1,5 @@
 ﻿using BussinessLogic.Exceptions;
-using BussinessLogic.Requests;
+using BussinessLogic.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DemoApi.Middlewares {
-    public class ExceptionHandlingMiddleware
+namespace DemoApi.Middlewares
+{
+	public class ExceptionHandlingMiddleware
     {
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
         private readonly RequestDelegate _next;

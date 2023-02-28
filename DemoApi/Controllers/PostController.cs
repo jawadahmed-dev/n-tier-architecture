@@ -1,35 +1,44 @@
-﻿using BussinessLogic.Requests;
-using BussinessLogic.Requests.Posts;
-using BussinessLogic.Services.Posts;
+﻿using BussinessLogic.RequestHandlers.Posts.Commands;
+using BussinessLogic.RequestHandlers.Posts.Queries.GetAllPosts;
+using BussinessLogic.RequestHandlers.Posts.Queries.GetPagedPosts;
+using BussinessLogic.Response;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DemoApi.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class PostController : ControllerBase
 	{
-		private IPostService _postService;
+		private IMediator _mediator;
 
-		public PostController(IPostService postService)
+		public PostController(IMediator mediator)
 		{
-			_postService = postService;
+			_mediator = mediator;
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Get([FromQuery] PostRequest request)
+		[HttpGet("GetPagedPosts")]
+		public async Task<IActionResult> Get([FromQuery] GetPagedPostsQuery request)
 		{
-			return Ok(ApiResult<PostResponse>.Success(await _postService.GetAsync(request)));
+			return Ok(ApiResult<PagedResponse<IEnumerable<GetPagedPostsResponse>>>.Success(await _mediator.Send(request)));
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateAsync([FromBody] CreatePostRequest request)
+		[HttpGet("Get")]
+		public async Task<IActionResult> Get([FromQuery] GetAllPostsQuery request)
 		{
-			return Ok(ApiResult<CreatePostResponse>.Success(await _postService.CreateAsync(request)));
+			return Ok(ApiResult<IEnumerable<GetAllPostsResponse>>.Success(await _mediator.Send(request)));
+		}
+
+		
+		[HttpPost("Create")]
+		public async Task<IActionResult> CreateAsync([FromBody] CreatePostCommand request)
+		{
+			return Ok(ApiResult<CreatePostResponse>.Success(await _mediator.Send(request)));
 		}
 	}
 }

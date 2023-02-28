@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using BussinessLogic.Requests.Posts;
+using BussinessLogic.RequestHandlers.Posts.Commands;
+using BussinessLogic.RequestHandlers.Posts.Queries.GetAllPosts;
+using BussinessLogic.RequestHandlers.Posts.Queries.GetPagedPosts;
 using DAL.Entities;
 
 namespace BussinessLogic.MappingProfiles
@@ -8,7 +10,9 @@ namespace BussinessLogic.MappingProfiles
 	{
 		public PostProfile()
 		{
-			CreateMap<CreatePostRequest, Post>();
+			CreateMap<CreatePostCommand, Post>();
+			CreateMap<Post, GetAllPostsResponse>();
+			CreateMap<Post, GetPagedPostsResponse>();
 		}
 	}
 }

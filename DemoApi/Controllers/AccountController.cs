@@ -1,8 +1,8 @@
-﻿using BussinessLogic.Requests;
-using BussinessLogic.Requests.Account;
-using BussinessLogic.Services.Accounts;
+﻿using BussinessLogic.RequestHandlers.Accounts.Commands.Register;
+using BussinessLogic.RequestHandlers.Accounts.Queries.Login;
+using BussinessLogic.Response;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace DemoApi.Controllers
@@ -11,23 +11,23 @@ namespace DemoApi.Controllers
 	[ApiController]
 	public class AccountController : ControllerBase
 	{
-		private IAccountService _accountService;
+		private readonly IMediator _mediatr;
 
-		public AccountController(IAccountService accountService)
+		public AccountController(IMediator mediatr)
 		{
-			_accountService = accountService;
+			_mediatr = mediatr;
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> RegisterUserAsyc([FromBody] RegisterRequest request)
+		public async Task<IActionResult> RegisterUserAsyc([FromBody] RegisterCommand request)
 		{
-			return Ok(ApiResult<RegisterResponse>.Success(await _accountService.RegisterAsync(request)));
+			return Ok(ApiResult<RegisterResponse>.Success(await _mediatr.Send(request)));
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> LoginUserAsyc([FromQuery] LoginRequest request)
+		public async Task<IActionResult> LoginUserAsyc([FromQuery] LoginQuery request)
 		{
-			return Ok(ApiResult<LoginResponse>.Success(await _accountService.LoginAsync(request)));
+			return Ok(ApiResult<LoginResponse>.Success(await _mediatr.Send(request)));
 		}
 
 	}

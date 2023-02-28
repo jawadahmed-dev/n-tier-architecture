@@ -1,4 +1,5 @@
-﻿using DataAccess.Identity;
+﻿using DataAccess;
+using DataAccess.Identity;
 using DemoApi.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ namespace DAL.Extensions
 		{
 			InstallDatabase(services, configuration);
 			InstallIdentity(services);
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 			return services;
 		}

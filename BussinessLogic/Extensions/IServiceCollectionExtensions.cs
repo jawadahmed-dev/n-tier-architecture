@@ -1,13 +1,8 @@
 ﻿using BussinessLogic.MappingProfiles;
-using BussinessLogic.Services.Accounts;
-using BussinessLogic.Services.Posts;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shared.Services.Impl;
 
 namespace BussinessLogic.Extensions
 {
@@ -15,20 +10,16 @@ namespace BussinessLogic.Extensions
 	{
 		public static IServiceCollection InstallBussinessLogic(this IServiceCollection services, IConfiguration configuration) {
 
-			InstallServices(services);
-			InstallAutoMapper(services);
 
+			services.AddScoped<IClaimService, ClaimService>();
+			InstallAutoMapper(services);
+			InstallMediatR(services);
 			return services;
 		}
 
-		public static void InstallServices(IServiceCollection services)
+		public static void InstallMediatR(IServiceCollection services)
 		{
-
-			// Posts Service
-			services.AddScoped<IPostService, PostService>();
-
-			// Account Service
-			services.AddScoped<IAccountService, AccountService>();
+			services.AddMediatR(typeof(IMappingProfilesMarker).Assembly);
 		}
 
 		public static void InstallAutoMapper(IServiceCollection services)

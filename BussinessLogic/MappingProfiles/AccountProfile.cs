@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BussinessLogic.Requests.Account;
+using BussinessLogic.RequestHandlers.Accounts.Commands.Register;
 using DataAccess.Identity;
 
 namespace BussinessLogic.MappingProfiles
@@ -8,7 +8,7 @@ namespace BussinessLogic.MappingProfiles
 	{
 		public AccountProfile()
 		{
-			CreateMap<RegisterRequest, ApplicationUser>();
+			CreateMap<RegisterCommand, ApplicationUser>();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BussinessLogic.Requests {
+namespace BussinessLogic.Response {
     public class ApiResult<T>
     {
         private ApiResult() { }

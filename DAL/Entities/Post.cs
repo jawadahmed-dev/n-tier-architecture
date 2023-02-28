@@ -11,9 +11,8 @@ namespace DAL.Entities
 	public class Post : BaseEntity, IAuditedEntity
 	{
 		public string Name { get; set; }
-
+		public Guid UserId { get; set; }
 		public DateTime CreatedOn { get; set; }
-
 		public DateTime? UpdatedOn { get; set; }
 	}
 }
