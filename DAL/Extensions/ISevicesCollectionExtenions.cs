@@ -1,10 +1,12 @@
 ﻿using DataAccess;
 using DataAccess.Identity;
+using DataAccess.Persistence;
 using DemoApi.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DAL.Extensions
 {
@@ -15,10 +17,23 @@ namespace DAL.Extensions
 		{
 			InstallDatabase(services, configuration);
 			InstallIdentity(services);
+			InitializeDatabase(services);
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 			return services;
+		}
+
+		private static void InitializeDatabase(IServiceCollection services)
+		{
+			var serviceProvider = services.BuildServiceProvider();
+
+			var serviceScope = serviceProvider.CreateScope();
+			var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+
+			// Call the data seeding method when the application starts
+			DbInitializer.Initialize(context);
+
 		}
 
 		public static void InstallIdentity(IServiceCollection services) {
