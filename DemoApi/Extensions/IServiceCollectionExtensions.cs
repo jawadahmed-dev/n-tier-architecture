@@ -1,4 +1,5 @@
-﻿using Domain.Options;
+﻿using DemoApi.Filters;
+using Domain.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,7 +74,14 @@ namespace DemoApi.Extensions
 
 		private static void InstallController(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services.AddControllersWithViews(options => 
+			{
+				options.Filters.Add(new ValidateModelFilter());
+			})
+			.ConfigureApiBehaviorOptions(options => 
+			{
+				options.SuppressModelStateInvalidFilter = true;
+			});
 		}
 	}
 }
