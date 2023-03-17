@@ -31,8 +31,8 @@ namespace DAL.Extensions
 			var serviceScope = serviceProvider.CreateScope();
 			var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
 
-			// Call the data seeding method when the application starts
-			DbInitializer.Initialize(context);
+			// Call the Automated Migration method when the application starts
+			AutomatedMigration.Migrate(context);
 
 		}
 

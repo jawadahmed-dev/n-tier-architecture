@@ -1,30 +1,18 @@
 ﻿using DAL.Entities;
 using DemoApi.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Persistence
+namespace DataAccess.Persistence.Seeds
 {
-	public static class DbInitializer
+	public class PostSeeder : IDataSeeder
 	{
-		public static void Initialize(DataContext dbContext) 
+		public async Task SeedData(DataContext dataContext)
 		{
-			dbContext.Database.Migrate();
-
-			InitializePosts(dbContext);
-			
-		}
-
-		private async static void InitializePosts(DataContext dbContext)
-		{
-			if (dbContext.Posts.Any()) 
-			{
-				return;
-			}
+			if (dataContext.Posts.Any()) return;
 
 			var posts = new List<Post>
 			{
@@ -33,9 +21,8 @@ namespace DataAccess.Persistence
 				new Post {Id = Guid.NewGuid(), Name = "Chat GPT", UserId = Guid.NewGuid() },
 			};
 
-			dbContext.Posts.AddRange(posts);
-			await dbContext.SaveChangesAsync();
-
+			dataContext.Posts.AddRange(posts);
+			await dataContext.SaveChangesAsync();
 		}
 	}
 }

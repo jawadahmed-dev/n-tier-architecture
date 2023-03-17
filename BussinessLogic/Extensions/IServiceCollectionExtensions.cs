@@ -34,7 +34,7 @@ namespace BussinessLogic.Extensions
 
 		public static void InstallAutoMapper(IServiceCollection services)
 		{
-			services.AddAutoMapper(typeof(IMappingProfilesMarker));
+			services.AddAutoMapper(typeof(IBussinessLogicLayerMarker));
 		}
 	}
 }
