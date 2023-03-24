@@ -10,7 +10,7 @@ namespace DataAccess.Persistence.Seeds
 {
 	public class PostSeeder : IDataSeeder
 	{
-		public async Task SeedData(DataContext dataContext)
+		public async Task SeedData(DataContext dataContext, IServiceProvider serviceProvider)
 		{
 			if (dataContext.Posts.Any()) return;
 

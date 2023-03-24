@@ -26,13 +26,13 @@ namespace DAL.Extensions
 
 		private static void InitializeDatabase(IServiceCollection services)
 		{
-			var serviceProvider = services.BuildServiceProvider();
 
-			var serviceScope = serviceProvider.CreateScope();
-			var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+			var serviceScope = services.BuildServiceProvider().CreateScope();
+			var serviceProvider = serviceScope.ServiceProvider;
+			var context = serviceProvider.GetRequiredService<DataContext>();
 
 			// Call the Automated Migration method when the application starts
-			AutomatedMigration.Migrate(context);
+			AutomatedMigration.Migrate(context, serviceProvider);
 
 		}
 
@@ -41,6 +41,7 @@ namespace DAL.Extensions
 			services
 				.AddIdentity<ApplicationUser, IdentityRole>(options => {
 					options.User.RequireUniqueEmail = true;
+					options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 				})
 				.AddEntityFrameworkStores<DataContext>();
 		}

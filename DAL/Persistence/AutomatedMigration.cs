@@ -11,16 +11,16 @@ namespace DataAccess.Persistence
 {
 	public class AutomatedMigration
 	{
-		public static void Migrate(DataContext dbContext)
+		public async static void Migrate(DataContext dbContext, IServiceProvider serviceProvider)
 		{
 			dbContext.Database.Migrate();
 			var dataSeedersList = typeof(IDataAccessLayerMarker).Assembly.GetExportedTypes()
 				.Where(x => x.IsAssignableTo(typeof(IDataSeeder)) && !x.IsAbstract)
-				.Select(x => (IDataSeeder)Activator.CreateInstance(x)).ToList();
+				.Select(x => (IDataSeeder)Activator.CreateInstance(x));
 
 			foreach (var dataSeeder in dataSeedersList)
 			{
-				dataSeeder.SeedData(dbContext);
+				await dataSeeder.SeedData(dbContext, serviceProvider);
 			}
 
 		}

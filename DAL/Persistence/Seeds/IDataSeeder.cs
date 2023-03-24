@@ -9,6 +9,6 @@ namespace DataAccess.Persistence.Seeds
 {
 	public interface IDataSeeder
 	{
-		Task SeedData(DataContext dataContext);
+		Task SeedData(DataContext dataContext, IServiceProvider serviceProvider);
 	}
 }
