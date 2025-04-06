@@ -1,8 +1,9 @@
+
 # N-Tier Architecture Template
 
 Welcome to the **N-Tier Architecture Template**! This repository provides a well-structured, scalable, and maintainable solution for building applications using the n-tier architecture pattern. The template is designed as a monolithic architecture but can be adapted for various use cases, making it a great starting point for developers looking to build robust applications.
 
-This template is free to use, modify, and distribute. Whether you're a beginner learning about layered architecture or an experienced developer looking for a solid foundation, this template has you covered. Contributions are welcome—feel free to fork, star, and submit pull requests!
+This template is free for anyone to use, modify, and extend. Whether you're a beginner learning about layered architecture or an experienced developer looking for a solid foundation, this template has you covered. Contributions are welcome—feel free to fork, star, and submit pull requests!
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -16,7 +17,7 @@ This template is free to use, modify, and distribute. Whether you're a beginner 
 5. [Getting Started](#getting-started)
 6. [How to Use](#how-to-use)
 7. [Contributing](#contributing)
-8. [License](#license)
+8. [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -214,28 +215,32 @@ This layer promotes code reuse by providing common functionality that can be use
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+Anyone is welcome to contribute to this project! To contribute, simply follow these steps:
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix:
+1. Fork the repository to your GitHub account.
+2. Clone your forked repository to your local machine:
    ```bash
-   git checkout -b feature/your-feature-name
+   git clone https://github.com/your-username/n-tier-architecture-template.git
    ```
-3. Make your changes and commit them:
+3. Create a new branch for your changes using the `feature-` prefix (e.g., `feature-add-user-auth`):
    ```bash
-   git commit -m "Add your commit message"
+   git checkout -b feature-<your-feature-name>
    ```
-4. Push your changes to your fork:
+4. Make your changes and test them locally to ensure they work as expected.
+5. Commit your changes with a clear and descriptive commit message:
    ```bash
-   git push origin feature/your-feature-name
+   git commit -m "Add feature: <brief description of your changes>"
    ```
-5. Open a pull request with a detailed description of your changes.
+6. Push your branch to your forked repository:
+   ```bash
+   git push origin feature-<your-feature-name>
+   ```
+7. Open a pull request (PR) from your branch to the `main` branch of this repository. In your PR description, explain:
+   - What changes you made.
+   - Why these changes are useful.
+   - Any additional context (e.g., if your changes fix a specific issue).
 
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this template for personal or commercial projects.
+We’ll review your pull request as soon as possible. Thank you for contributing!
 
 ---
 
@@ -249,5 +254,3 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 Feel free to star ⭐ this repository if you find it useful! If you have any questions or need assistance, open an issue, and I'll be happy to help.
 
 ---
-
-This README should give your GitHub repository a professional and inviting look, showcasing the structure and purpose of your n-tier architecture template. Let me know if you'd like to adjust or add anything!
